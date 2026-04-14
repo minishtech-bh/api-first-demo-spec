@@ -21,6 +21,22 @@ yaml이 바뀌면 양쪽에서 컴파일 에러로 즉시 감지됩니다.
 
 ---
 
+## AI 작업 컨벤션 (CLAUDE.md)
+
+이 레포에는 `CLAUDE.md`가 있습니다.  
+Claude Code로 yaml을 수정할 때 자동으로 로드되어 아래 규칙을 강제합니다.
+
+- operationId 네이밍 (`camelCase`, 동사+명사)
+- 스키마 네이밍 (`PascalCase`, Request/Response 구분)
+- 모든 프로퍼티에 `example` 필수
+- `required` 배열 명시 필수
+- 4XX 응답은 공통 `ErrorResponse` 스키마 사용
+- Breaking change 정의 및 금지 행동
+
+팀 컨벤션을 바꾸려면 `CLAUDE.md`를 PR로 수정합니다.
+
+---
+
 ## CI — 자동 스펙 검증
 
 PR 및 push 시 GitHub Actions가 `openapi.yaml`을 자동으로 검증합니다.
