@@ -1,0 +1,16 @@
+name: Validate OpenAPI Spec
+
+on:
+  push:
+    branches: ["**"]
+  pull_request:
+
+jobs:
+  lint:
+    name: Redocly Lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Lint openapi.yaml
+        run: npx --yes @redocly/cli@latest lint openapi.yaml
