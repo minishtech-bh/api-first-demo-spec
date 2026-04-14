@@ -25,6 +25,12 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Todo'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
     post:
       operationId: createTodo
       summary: Create a todo
@@ -42,6 +48,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Todo'
+        '400':
+          description: Validation error (e.g. title is required, priority out of range)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
 
   /todos/{id}:
     get:
@@ -62,8 +74,18 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Todo'
+        '400':
+          description: Invalid id format
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
         '404':
-          description: Not found
+          description: Todo not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
     put:
       operationId: updateTodo
       summary: Update a todo
@@ -88,8 +110,18 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Todo'
+        '400':
+          description: Validation error (e.g. title is required, priority out of range)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
         '404':
-          description: Not found
+          description: Todo not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
     delete:
       operationId: deleteTodo
       summary: Delete a todo
@@ -103,9 +135,19 @@ paths:
             format: int64
       responses:
         '204':
-          description: Deleted
+          description: Deleted successfully
+        '400':
+          description: Invalid id format
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
         '404':
-          description: Not found
+          description: Todo not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
 
 components:
   schemas:
@@ -153,3 +195,16 @@ components:
         completed:
           type: boolean
           example: true
+
+    ErrorResponse:
+      type: object
+      required: [code, message]
+      properties:
+        code:
+          type: string
+          example: VALIDATION_ERROR
+          description: Machine-readable error code
+        message:
+          type: string
+          example: title is required
+          description: Human-readable error message
